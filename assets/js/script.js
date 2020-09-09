@@ -86,21 +86,16 @@ $(() => {
 
         // формируем матрицы количества каждой цифры
         for (let key in date) {
-            if (date[key] == 11 && key != "day" && key != "month" && key != "year") {
-                matrix[11]++;
-                continue;
-            }
-            if ((date[key] == 10 || date[key] == 12) && key != "day" && key != "month" && key != "year") {
+            if ((date[key] == 10 || date[key] == 11 || date[key] == 12) && !(key == "day" || key == "month" || key == "year")) {
                 if (key == "d5" || key == "d6") exmatrix[date[key]]++;
                 else matrix[date[key]]++;
-                if (date.year >= 2000) continue;
+                if ( !(date[key] != 11 && date.year < 2000) ) continue;
             }
 
-            if (key == "d5" || key == "d6")
-                exdigits += String(date[key]);
-            else
-                digits += String(date[key]);
+            if (key == "d5" || key == "d6") exdigits += String(date[key]);
+            else digits += String(date[key]);
         }
+
         for (let i = 0; i < digits.length; i++) matrix[Number(digits[i])] += 1;
         for (let i = 0; i < exdigits.length; i++) exmatrix[Number(exdigits[i])] += 1;
 
